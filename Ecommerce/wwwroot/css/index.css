@@ -1,0 +1,94 @@
+﻿/* General Reset */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+}
+
+/* Hero Section */
+.hero {
+    background: url('https://source.unsplash.com/1600x900/?shoes') no-repeat center center;
+    background-size: cover;
+    color: #fff;
+}
+
+    .hero h1 {
+        font-size: 3rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    }
+
+    .hero .search-form input {
+        max-width: 300px;
+        border: none;
+        border-radius: 30px;
+        padding: 0.5rem 1rem;
+    }
+
+    .hero .search-form button {
+        border-radius: 30px;
+    }
+
+/* Categories Section */
+.categories h2 {
+    color: #343a40;
+}
+
+/* Shoe Card */
+.shoe-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+    .shoe-card:hover {
+        transform: scale(1.05);
+    }
+
+.shoe-image {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+
+.shoe-info {
+    padding: 15px;
+    text-align: center;
+}
+
+.shoe-title {
+    font-weight: bold;
+    font-size: 1.25rem;
+    color: #343a40;
+}
+
+.shoe-description {
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+.shoe-price {
+    font-size: 1rem;
+    color: #28a745;
+    margin: 10px 0;
+}
+
+.out-of-stock {
+    font-weight: bold;
+    color: #dc3545;
+    background-color: #f8d7da;
+    padding: 5px;
+    border-radius: 4px;
+    text-transform: uppercase;
+}
+
+/* Footer */
+footer {
+    background: #343a40;
+    color: #fff;
+    text-align: center;
+    padding: 1rem 0;
+}

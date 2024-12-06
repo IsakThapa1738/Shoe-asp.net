@@ -1,0 +1,51 @@
+﻿﻿
+
+
+@model IEnumerable<YourNamespace.Models.Shoe>
+
+@{
+    Layout = "_AdminLayout";
+}
+
+<h2>Shoes</h2>
+
+<a asp-action="AddShoe" asp-controller="Shoe" class="btn btn-primary">Add More</a>
+
+@if(Model?.Count()>0)
+{
+    <table class="table table-striped my-2">
+        <tr>
+            <th>Image</th>
+            <th>Shoe</th>
+            <th>Description</th>
+
+            
+            <th>Category</th>
+            <th>Price</th>
+            <th>Action</th>
+        </tr>
+
+        @foreach (var Shoe in Model)
+        {
+            <tr>
+                <td>
+                   
+                    <img src="~/Images/@Shoe.Image" style="width:80px;height:100px" alt="Shoe image" asp-append-version="true" />
+
+                </td>
+                <td>@Shoe.Name</td>
+                
+                <td>@Shoe.Category.Name</td>
+                <td>@Shoe.Price</td>
+                <td>
+                    <a asp-action="UpdateShoe" asp-controller="Shoe" asp-route-id="@Shoe.Id" class="btn btn-success">Edit</a>
+                    <a asp-action="DeleteShoe" asp-controller="Shoe" asp-route-id="@Shoe.Id" class="btn btn-danger" onclick="return window.confirm('Are you sure?')">Delete</a>
+                </td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <h3>No records</h3>
+}

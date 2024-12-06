@@ -1,0 +1,105 @@
+﻿@model ShoeDisplayModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shoe List</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link href="~/css/index.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero text-center text-white py-5">
+        <div class="container">
+            <h1 class="display-4 fw-bold">Step into Style</h1>
+            <p class="lead">Find the perfect pair of shoes for every occasion.</p>
+            <form class="search-form d-flex justify-content-center mt-4" method="get" action="/Home/Index">
+                <input type="text" name="sterm" class="form-control me-2" placeholder="Search shoes...">
+                <button type="submit" class="btn btn-dark">Search</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Shoe Categories -->
+    <section class="categories py-5">
+        <div class="container text-center">
+            <h2 class="mb-4">Browse by Category</h2>
+            <div class="row justify-content-center">
+                <select name="categoryId" class="form-select w-auto">
+                    <option value="0">All Categories</option>
+                    @foreach (var category in Model.Categories)
+                    {
+                        <option value="@category.Id"
+                                selected="@(category.Id.ToString() == ViewContext.HttpContext.Request.Query["categoryId"])">
+                            @category.Name
+                        </option>
+                    }
+                </select>
+            </div>
+        </div>
+    </section>
+
+    <!-- Shoe List -->
+    <section class="shoe-list py-5">
+        <div class="container">
+            @if (Model.Shoes.Any())
+            {
+                <div class="row g-4">
+                    @foreach (var Shoe in Model.Shoes)
+                    {
+                        <div class="col-md-4">
+                            <div class="shoe-card">
+                                <img src="~/Images/@Shoe.Image" alt="@Shoe.Name" class="shoe-image">
+                                <div class="shoe-info">
+                                    <h5 class="shoe-title">@Shoe.Name</h5>
+                                    <p class="shoe-description">@Shoe.Description</p>
+                                    <p class="shoe-price">Rs @Shoe.Price</p>
+                                    @if (Shoe.Quantity > 0)
+                                    {
+                                        <button class="btn btn-dark w-100" onclick="add(@Shoe.Id)">Add to Cart</button>
+                                    }
+                                    else
+                                    {
+                                        <div class="out-of-stock">Out of Stock</div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="text-center">
+                    <p class="text-muted">No Shoes found.</p>
+                </div>
+            }
+        </div>
+    </section>
+
+    @section Scripts {
+        <script>
+            async function add(ShoeId) {
+                const usernameEl = document.getElementById("username");
+                if (!usernameEl) {
+                    window.location.href = "/Identity/Account/Login";
+                }
+                try {
+                    const response = await fetch(`/Cart/AddItem?ShoeId=${ShoeId}`);
+                    if (response.status === 200) {
+                        const result = await response.json();
+                        const cartCountEl = document.getElementById("cartCount");
+                        if (cartCountEl) {
+                            cartCountEl.innerHTML = result;
+                        }
+                    }
+                } catch (err) {
+                    console.error("Error adding item to cart:", err);
+                }
+            }
+        </script>
+    }
+</body>
+</html>
